@@ -1,13 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const { isActive, changePhase, transferVote, countVote, result, getCount } = require('../controllers/VoteController')
+const { isActive, currentPhase, changePhase, transferVote, result, getCount, getVoterDetail } = require('../controllers/VoteController')
+const verify = require('../utils/verify')
 
-router.post('/voting-phase', isActive)
+
+router.post('/is-active', isActive)
+router.post('/voting-phase', currentPhase)
 router.post('/change-phase', changePhase)
-router.post('/transfer-vote', transferVote)
-router.post('/count-vote', countVote)
+router.post('/transfer-vote', verify, transferVote)
 router.post('/result', result)
 router.post('/count', getCount)
+router.post('/voter-detail', verify, getVoterDetail)
 
 module.exports = router
